@@ -2,10 +2,6 @@ const vacanciesList = document.querySelector(".vacancies__list")
 
 const selectedVacanciesList = document.querySelector(".vacanciesSelecteds__list")
 
-selectedVacanciesList.insertAdjacentHTML("beforeend","<p>Você ainda não aplicou para nenhuma vaga</p>")
-
-
-
 function renderVacancyList(list){
     vacanciesList.innerHTML = ""
     list.forEach((vac)=>{
@@ -63,9 +59,10 @@ function renderVacancyList(list){
 }
 
 
+const list = JSON.parse(localStorage.getItem("list")) || []
+
 const removeOrAddVacancy = (event)=>{
     const id = event.target.id
-    const list = JSON.parse(localStorage.getItem("list")) || []
     const find = list.find(vacancy => vacancy.id == id)
     
     if(find){
@@ -85,14 +82,12 @@ const removeOrAddVacancy = (event)=>{
 
 function renderSelectedVacancy(list){
     
-    selectedVacanciesList.insertAdjacentHTML("beforeend","<p>Você ainda não aplicou para nenhuma vaga</p>")
-    
     selectedVacanciesList.innerHTML = ""
 
-    
     if(list.length == 0){
-        selectedVacanciesList.insertAdjacentHTML("beforeend","<p>Você removeu todas as vagas</p>") 
+        selectedVacanciesList.insertAdjacentHTML("beforeend","<p>Você ainda não aplicou para nenhuma vaga</p>") 
     }
+
     list.forEach((vac)=>{
         const selectedVacancy = document.createElement("li")
         selectedVacancy.classList.add("vacancySelected")
@@ -128,3 +123,4 @@ function renderSelectedVacancy(list){
 }
 
 renderVacancyList(jobsData)
+renderSelectedVacancy(list)
